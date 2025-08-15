@@ -23,5 +23,17 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+-- Disable annoying fold carrots
+vim.api.nvim_create_autocmd("VimEnter" , { command = " set nofoldenable "})
+
+-- Yank to clipboard
+vim.opt.clipboard = "unnamedplus"
+
+-- Enable xml highlighting for ROS .launch files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.launch",
+  command = "set filetype=xml",
+})
+
 require "lazy_setup"
 require "polish"
