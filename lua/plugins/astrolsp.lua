@@ -44,7 +44,7 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      clangd = { "docker", "exec", "-it", "<container_name>", "clangd", "--background-index", "--path-mappings=/home/<host_usr>/code=/home/<docker_usr>", "--compile-commands-dir=./build"},
     },
     -- customize how language servers are attached
     handlers = {

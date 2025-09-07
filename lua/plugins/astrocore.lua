@@ -77,6 +77,17 @@ return {
         -- this is useful for naming menus
         -- ["<Leader>b"] = { desc = "Buffers" },
 
+        -- Swap between header and cpp files
+        ["<Leader>h"] = {"<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch between header/source file"},
+
+        -- Go to definition and references
+        ["<Leader>fd"] = { function() vim.lsp.buff.definition() end, desc = "Go to Definition"},
+        ["<Leader>fr"] = { function() require("snacks.picker").lsp_references() end, desc = "Go to References"},
+
+        -- Tab between buffers
+        ["<Tab>"] = { function() require("astrocore.buffer").nav(1) end, desc = "Next buffer"},
+        ["<S-Tab>"] = { function() require("astrocore.buffer").nav(-1) end, desc = "Previous buffer"}
+
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
       },
