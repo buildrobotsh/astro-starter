@@ -29,6 +29,12 @@ vim.api.nvim_create_autocmd("VimEnter" , { command = " set nofoldenable "})
 -- Yank to clipboard
 vim.opt.clipboard = "unnamedplus"
 
+-- Remove trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
+})
+
 -- Enable xml highlighting for ROS .launch files
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.launch",
