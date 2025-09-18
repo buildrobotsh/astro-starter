@@ -57,39 +57,33 @@ return {
     mappings = {
       -- first key is the mode
       n = {
-        -- second key is the lefthand side of the map
+         -- Diffview git diffing
+        ["<Leader>gdd"] = {"<cmd>DiffviewOpen<cr>", desc = "Open diff view of the working tree"},
+        ["<Leader>gdm"] = {"<cmd>DiffviewOpen master..HEAD<cr>", desc = "Compare current branch with master"},
+        ["<Leader>gdf"] = {"<cmd>DiffviewFileHistory --follow %<cr>", desc = "View current file history"},
+        ["<Leader>gdl"] = {"<cmd>.DiffviewFileHistory --follow<cr>", desc = "View line history"},
+        ["<Leader>gdc"] = {"<cmd>DiffviewClose<cr>", desc = "Close diff views"},
+        ["<Leader>gdh"] = {"<cmd>DiffviewFileHistory<CR>", desc = "View entire history"},
 
-        -- navigate buffer tabs
-        ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
-        ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+        -- Hunk-based Diffing (with gitsigns.nvim)
+        ["<Leader>ghp"] = { function() require("gitsigns").preview_hunk() end, desc = "Preview hunk" },
+        ["<Leader>ghs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage hunk" },
+        ["<Leader>ghu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage hunk" },
+        ["<Leader>ghr"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset hunk" },
+        
+        -- Visual Enhancements (Word or Line Diffs)
+        ["<Leader>gtw"] = { function() require("gitsigns").toggle_word_diff() end, desc = "Toggle word diff highlight" },
+        ["<Leader>gtl"] = { function() require("gitsigns").toggle_linehl() end, desc = "Toggle line highlight" },
+        ["<Leader>gtd"] = { function() require("gitsigns").toggle_deleted() end, desc = "Toggle highlight deleted lines" },
 
-        -- mappings seen under group name "Buffer"
-        ["<Leader>bd"] = {
-          function()
-            require("astroui.status.heirline").buffer_picker(
-              function(bufnr) require("astrocore.buffer").close(bufnr) end
-            )
-          end,
-          desc = "Close buffer from tabline",
-        },
-
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- Swap between header and cpp files
-        ["<Leader>h"] = {"<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch between header/source file"},
-
-        -- Go to definition and references
-        ["<Leader>fd"] = { function() vim.lsp.buff.definition() end, desc = "Go to Definition"},
+        -- Clangd hotkeys (Swap source and find def/ref)
+        ["<Leader>h"] = {"<cmd>ClangdSwitchSourceHeader<cr>",  desc = "Switch between header/source file" },
+        ["<Leader>fd"] = { function() vim.lsp.buf.definition() end, desc = "Go to Definition"},
         ["<Leader>fr"] = { function() require("snacks.picker").lsp_references() end, desc = "Go to References"},
 
         -- Tab between buffers
         ["<Tab>"] = { function() require("astrocore.buffer").nav(1) end, desc = "Next buffer"},
-        ["<S-Tab>"] = { function() require("astrocore.buffer").nav(-1) end, desc = "Previous buffer"}
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
+        ["<S-Tab>"] = { function() require("astrocore.buffer").nav(-1) end, desc = "Previous buffer"},
       },
     },
   },
